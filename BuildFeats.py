@@ -9,28 +9,28 @@ import pandas as pd
 import pickle
 
 def LoadAndMerge(Name, Type, FS):
-#    print 'Feature matrix shape:', FS.shape
+    print 'Feature matrix shape:', FS.shape
     Data = pickle.load(open( Name + Type + ".p", "rb"))
-#    print Name + ' shape:', Data.shape
+    print Name + ' shape:', Data.shape
     return pd.merge(FS, Data, left_on = 'id', right_on = 'id')
     
 def LoadAndMergeCSV(Name, FS):
-#    print 'Feature matrix shape:', FS.shape
+    print 'Feature matrix shape:', FS.shape
     Data = pd.read_csv(Name + '.csv')
-#    print Name + ' shape:', Data.shape
+    print Name + ' shape:', Data.shape
     return pd.merge(FS, Data, how = 'left', left_on = 'id', right_on = 'user_id').fillna(0)
     
     
 def getFeats(Data, Type, FOLDER):
     FS = pd.DataFrame()
     FS['id'] = Data['id']
-#    print 'Id shape:', FS.shape
+    print 'Id shape:', FS.shape
 # Need to include everywhere to do train/test split
     FS = LoadAndMerge('FirstActive', Type, FS)
     if('BasicInfo' in FOLDER):
         FS = LoadAndMerge('AccountCreated', Type, FS)
         
-    #    FS = LoadAndMerge('FirstBooking', Type, FS)
+#        FS = LoadAndMerge('FirstBooking', Type, FS)
         
         FS = LoadAndMerge('Gender', Type, FS)
         FS = LoadAndMerge('Age', Type, FS)

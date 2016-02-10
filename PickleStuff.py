@@ -533,9 +533,9 @@ def pickleSessions(Data):
         print GN + 'written to CSV'
         
         
-#Train = pd.read_csv('train_users_2.csv')
+Train = pd.read_csv('train_users_2.csv')
 #Test = pd.read_csv('test_users.csv')
-Sessions = pd.read_csv('sessions.csv')
+#Sessions = pd.read_csv('sessions.csv')
 #pickleStuff(Train, 'Train')
 #pickleStuff(Test, 'Test')
-pickleSessions(Sessions)
+#pickleSessions(Sessions)

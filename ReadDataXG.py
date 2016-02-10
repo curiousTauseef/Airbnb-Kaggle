@@ -55,7 +55,7 @@ def trainModel(Feats, Labels, Feats_test, Labels_test):
     RFC.fit(Feats, Labels)
     return RFC
     
-def readDataMain(FOLDER):
+def readDataMain(FOLDER, skip):
     
     warnings.filterwarnings("ignore")
         
@@ -117,7 +117,7 @@ def readDataMain(FOLDER):
 #    Train_Feats_Only = Train_Feats.loc[~((Train_Feats['FirstActiveYear'].isin([2014])) & (Train_Feats['FirstActiveMonth'] > 3)), :]
     
     # 0.7 of data for first layer, 0.3 for second layer
-    X_train, X_test, y_train, y_test = train_test_split(Train_Feats.drop(Remove, axis = 1), Train_Feats.loc[:, LabelIndex], test_size=0.3, random_state = 86)
+    X_train, X_test, y_train, y_test = train_test_split(Train_Feats.drop(Remove, axis = 1), Train_Feats.loc[:, LabelIndex], test_size=0.5)
 
     
 #    X_test = X_test.append(Train_Feats.loc[(Train_Feats['FirstActiveYear'].isin([2014])) & (Train_Feats['FirstActiveMonth'] > 3), :].drop(Remove, axis = 1))
@@ -185,10 +185,9 @@ def readDataMain(FOLDER):
             if(li1 is not li2):
                 for i in range(0, 2):
 #                for i in range(0, int(np.true_divide(Freqs[LabelIndex.index(li2)], 2 * Freqs[LabelIndex.index(li1)])) + 1):
-#                    if(LabelIndex.index(li1) < 7 or 
-#                    (LabelIndex.index(li1) == 7 and LabelIndex.index(li2) < 9) or
-#                    (LabelIndex.index(li1) == 7 and LabelIndex.index(li2) == 9 and i + 1 < 2)):
-#                        continue
+                    if(skip):
+                        if(LabelIndex.index(li1) < 7 or (LabelIndex.index(li1) == 7 and LabelIndex.index(li2) < 2)):
+                            continue
                     name = li1 + 'with' + li2 + str(i + 1)
                     Probs = pd.DataFrame()
                     Ext_Test_Probs = pd.DataFrame()
